@@ -1,0 +1,457 @@
+{
+  "title": "Martins SMS Overblik",
+  "description": "",
+  "widgets": [
+    {
+      "id": 7920344517460108,
+      "layout": { "x": 1, "y": 1, "width": 34, "height": 6 },
+      "definition": {
+        "type": "free_text",
+        "text": "2BM A/S - SMS",
+        "color": "#4d4d4d",
+        "font_size": "auto",
+        "text_align": "left"
+      }
+    },
+    {
+      "id": 7878212785000073,
+      "definition": {
+        "type": "query_value",
+        "requests": [
+          {
+            "q": "sum:sms.desdemona.process_time.count{*}.as_count()",
+            "aggregator": "sum",
+            "conditional_formats": [
+              {
+                "comparator": ">",
+                "value": 15000,
+                "palette": "white_on_green",
+                "custom_bg_color": "#02ab1d"
+              },
+              {
+                "comparator": ">",
+                "value": 10000,
+                "palette": "green_on_white",
+                "custom_bg_color": "#92e67c"
+              },
+              {
+                "comparator": "<",
+                "value": 5000,
+                "palette": "white_on_yellow"
+              },
+              { "comparator": "<", "value": 500, "palette": "white_on_red" }
+            ]
+          }
+        ],
+        "title": "E-mail2SMS Seneste 24t.",
+        "title_size": "16",
+        "title_align": "center",
+        "time": { "live_span": "1d" },
+        "autoscale": true,
+        "custom_unit": "",
+        "precision": 0
+      },
+      "layout": { "x": 36, "y": 36, "width": 31, "height": 11 }
+    },
+    {
+      "id": 4333602989604667,
+      "definition": {
+        "type": "toplist",
+        "requests": [
+          {
+            "q": "top(sum:sms.desdemona.process_time.count{*} by {from_domain}.as_count(), 20, 'sum', 'desc')",
+            "conditional_formats": [
+              { "comparator": ">", "value": 5000, "palette": "white_on_green" },
+              { "comparator": "<", "value": 500, "palette": "white_on_gray" }
+            ],
+            "style": { "palette": "cool" }
+          }
+        ],
+        "title": "Customer E-Mail2SMS Toplist",
+        "title_size": "16",
+        "title_align": "center",
+        "time": { "live_span": "1d" }
+      },
+      "layout": { "x": 1, "y": 9, "width": 34, "height": 38 }
+    },
+    {
+      "id": 2881192251279763,
+      "layout": { "x": 52, "y": 9, "width": 15, "height": 8 },
+      "definition": {
+        "title": "Online",
+        "title_size": "13",
+        "title_align": "center",
+        "time": { "live_span": "10m" },
+        "type": "check_status",
+        "check": "datadog.agent.up",
+        "grouping": "check",
+        "group": "host:KANNEL",
+        "tags": ["*"]
+      }
+    },
+    {
+      "id": 2219449837161159,
+      "layout": { "x": 36, "y": 9, "width": 15, "height": 8 },
+      "definition": {
+        "title": "Online",
+        "title_size": "13",
+        "title_align": "center",
+        "time": { "live_span": "10m" },
+        "type": "check_status",
+        "check": "datadog.agent.up",
+        "grouping": "check",
+        "group": "host:APPSRV1",
+        "tags": ["*"]
+      }
+    },
+    {
+      "id": 6374497137534323,
+      "layout": { "x": 36, "y": 48, "width": 47, "height": 33 },
+      "definition": {
+        "title": "Event Feed",
+        "title_size": "16",
+        "title_align": "center",
+        "time": { "live_span": "1d" },
+        "type": "event_stream",
+        "query": "*",
+        "tags_execution": "and",
+        "event_size": "s"
+      }
+    },
+    {
+      "id": 6280265266137916,
+      "layout": { "x": 36, "y": 1, "width": 32, "height": 3 },
+      "definition": {
+        "type": "free_text",
+        "text": "Amazon Web Services",
+        "color": "#ff7d33",
+        "font_size": "36",
+        "text_align": "left"
+      }
+    },
+    {
+      "id": 4842628584466767,
+      "layout": { "x": 36, "y": 5, "width": 15, "height": 3 },
+      "definition": {
+        "type": "free_text",
+        "text": "APPSRV1",
+        "color": "#ff7d33",
+        "font_size": "36",
+        "text_align": "left"
+      }
+    },
+    {
+      "id": 7272236301134030,
+      "layout": { "x": 52, "y": 5, "width": 15, "height": 3 },
+      "definition": {
+        "type": "free_text",
+        "text": "KANNEL",
+        "color": "#ff7d33",
+        "font_size": "36",
+        "text_align": "left"
+      }
+    },
+    {
+      "id": 3709367215616501,
+      "layout": { "x": 52, "y": 18, "width": 15, "height": 8 },
+      "definition": {
+        "title": "Bearer Box",
+        "title_size": "13",
+        "title_align": "center",
+        "time": { "live_span": "10m" },
+        "type": "check_status",
+        "check": "process.up",
+        "grouping": "check",
+        "group": "process:bearerbox,host:KANNEL",
+        "group_by": [],
+        "tags": ["*"]
+      }
+    },
+    {
+      "id": 2253275924143290,
+      "layout": { "x": 52, "y": 27, "width": 15, "height": 8 },
+      "definition": {
+        "title": "SMS Box",
+        "title_size": "13",
+        "title_align": "center",
+        "time": { "live_span": "10m" },
+        "type": "check_status",
+        "check": "process.up",
+        "grouping": "check",
+        "group": "process:smsbox,host:KANNEL",
+        "group_by": [],
+        "tags": ["*"]
+      }
+    },
+    {
+      "id": 5558476919191944,
+      "layout": { "x": 36, "y": 18, "width": 15, "height": 8 },
+      "definition": {
+        "title": "Webserver",
+        "title_size": "13",
+        "title_align": "center",
+        "time": { "live_span": "10m" },
+        "type": "check_status",
+        "check": "iis.site_up",
+        "grouping": "cluster",
+        "group": "site:internal_8080,host:APPSRV1",
+        "group_by": [],
+        "tags": []
+      }
+    },
+    {
+      "id": 2705129169611045,
+      "layout": { "x": 68, "y": 36, "width": 15, "height": 11 },
+      "definition": {
+        "title": "DATABASE",
+        "title_size": "13",
+        "title_align": "center",
+        "time": { "live_span": "10m" },
+        "type": "check_status",
+        "check": "sqlserver.can_connect",
+        "grouping": "check",
+        "group": "db:master,server:smsprod.c9di3idnseg7.eu-west-1.rds.amazonaws.com_1433,host:APPSRV1",
+        "group_by": [],
+        "tags": ["*"]
+      }
+    },
+    {
+      "id": 121354332696748,
+      "layout": { "x": 36, "y": 27, "width": 15, "height": 8 },
+      "definition": {
+        "title": "Services",
+        "title_size": "13",
+        "title_align": "center",
+        "time": { "live_span": "10m" },
+        "type": "check_status",
+        "check": "windows_service.state",
+        "grouping": "cluster",
+        "group_by": [],
+        "tags": ["host:APPSRV1"]
+      }
+    },
+    {
+      "id": 8795517237336440,
+      "definition": { "type": "iframe", "url": "https://2bm.statuspage.io/" },
+      "layout": { "x": 84, "y": 1, "width": 38, "height": 80 }
+    },
+    {
+      "id": 4338805616824048,
+      "definition": {
+        "type": "timeseries",
+        "requests": [
+          {
+            "q": "sum:sms.desdemona.process_time.count{*}.as_count()",
+            "display_type": "bars",
+            "style": {
+              "palette": "purple",
+              "line_type": "solid",
+              "line_width": "normal"
+            }
+          }
+        ],
+        "events": [{ "q": "dlr OR deliveryreport OR appsrv1 " }],
+        "title": "Activity",
+        "title_size": "16",
+        "title_align": "center",
+        "time": { "live_span": "1d" },
+        "show_legend": false,
+        "legend_size": "0"
+      },
+      "layout": { "x": 1, "y": 48, "width": 34, "height": 33 }
+    },
+    {
+      "id": 5036441004456061,
+      "definition": {
+        "type": "query_value",
+        "requests": [
+          { "q": "sum:sms.desdemona.emails.unique{*}", "aggregator": "sum" }
+        ],
+        "title": "Unique E-mails [24hr] (Desdemona)",
+        "title_size": "16",
+        "title_align": "left",
+        "time": { "live_span": "1d" },
+        "autoscale": true,
+        "precision": 0
+      },
+      "layout": { "x": 123, "y": 1, "width": 47, "height": 15 }
+    },
+    {
+      "id": 2405881776599258,
+      "definition": {
+        "type": "query_value",
+        "requests": [
+          { "q": "avg:sms.desdemona.recipients.unique{*}", "aggregator": "sum" }
+        ],
+        "title": "Unique Recipients [24hr] (Desdemona)",
+        "title_size": "16",
+        "title_align": "left",
+        "time": { "live_span": "1d" },
+        "autoscale": true,
+        "precision": 0
+      },
+      "layout": { "x": 123, "y": 17, "width": 47, "height": 15 }
+    },
+    {
+      "id": 6637964900274989,
+      "definition": {
+        "type": "query_value",
+        "requests": [
+          {
+            "q": "avg:sms.desdemona.process_time.95percentile{*} / 1000",
+            "aggregator": "avg",
+            "conditional_formats": [
+              { "comparator": ">", "value": 30, "palette": "white_on_red" },
+              { "comparator": ">=", "value": 2, "palette": "white_on_yellow" },
+              { "comparator": "<", "value": 2, "palette": "white_on_green" }
+            ]
+          }
+        ],
+        "title": "Average E-mail2SMS Process Time [1hr] (Desdemona)",
+        "title_size": "16",
+        "title_align": "left",
+        "time": { "live_span": "1h" },
+        "autoscale": true,
+        "custom_unit": "s",
+        "precision": 2
+      },
+      "layout": { "x": 123, "y": 33, "width": 47, "height": 15 }
+    },
+    {
+      "id": 7571564730378293,
+      "definition": {
+        "type": "timeseries",
+        "requests": [
+          {
+            "q": "sum:sms.desdemona.recipients.unique{country_code:1}",
+            "display_type": "bars",
+            "style": {
+              "palette": "purple",
+              "line_type": "solid",
+              "line_width": "normal"
+            }
+          },
+          {
+            "q": "sum:sms.desdemona.recipients.unique{country_code:30}.as_count()",
+            "display_type": "bars",
+            "style": {
+              "palette": "orange",
+              "line_type": "solid",
+              "line_width": "normal"
+            }
+          },
+          {
+            "q": "sum:sms.desdemona.recipients.unique{country_code:31}.as_count()",
+            "display_type": "bars",
+            "style": {
+              "palette": "dog_classic",
+              "line_type": "solid",
+              "line_width": "normal"
+            }
+          },
+          {
+            "q": "sum:sms.desdemona.recipients.unique{country_code:39}.as_count()",
+            "display_type": "bars",
+            "style": {
+              "palette": "cool",
+              "line_type": "solid",
+              "line_width": "normal"
+            }
+          },
+          {
+            "q": "sum:sms.desdemona.recipients.unique{country_code:40}.as_count()",
+            "display_type": "bars",
+            "style": {
+              "palette": "dog_classic",
+              "line_type": "solid",
+              "line_width": "normal"
+            }
+          },
+          {
+            "q": "sum:sms.desdemona.recipients.unique{country_code:41}.as_count()",
+            "display_type": "bars",
+            "style": {
+              "palette": "warm",
+              "line_type": "solid",
+              "line_width": "normal"
+            }
+          },
+          {
+            "q": "sum:sms.desdemona.recipients.unique{country_code:44}.as_count()",
+            "display_type": "bars",
+            "style": {
+              "palette": "dog_classic",
+              "line_type": "solid",
+              "line_width": "normal"
+            }
+          },
+          {
+            "q": "sum:sms.desdemona.recipients.unique{country_code:33}.as_count()",
+            "display_type": "bars",
+            "style": {
+              "palette": "orange",
+              "line_type": "solid",
+              "line_width": "normal"
+            }
+          },
+          {
+            "q": "sum:sms.desdemona.recipients.unique{country_code:358}.as_count()",
+            "display_type": "bars",
+            "style": {
+              "palette": "cool",
+              "line_type": "solid",
+              "line_width": "normal"
+            }
+          },
+          {
+            "q": "sum:sms.desdemona.recipients.unique{country_code:48}.as_count()",
+            "display_type": "bars",
+            "style": {
+              "palette": "dog_classic",
+              "line_type": "solid",
+              "line_width": "normal"
+            }
+          },
+          {
+            "q": "sum:sms.desdemona.recipients.unique{country_code:49}.as_count()",
+            "display_type": "bars",
+            "style": {
+              "palette": "warm",
+              "line_type": "solid",
+              "line_width": "normal"
+            }
+          },
+          {
+            "q": "sum:sms.desdemona.recipients.unique{country_code:61}.as_count()",
+            "display_type": "bars",
+            "style": {
+              "palette": "cool",
+              "line_type": "solid",
+              "line_width": "normal"
+            }
+          }
+        ],
+        "yaxis": {
+          "label": "",
+          "scale": "linear",
+          "min": "auto",
+          "max": "auto",
+          "include_zero": true
+        },
+        "events": [{ "q": "dlr OR deliveryreport OR appsrv1" }],
+        "title": "International SMS Traffic by Country Code",
+        "title_size": "16",
+        "title_align": "left",
+        "time": { "live_span": "1d" },
+        "show_legend": true,
+        "legend_size": "0"
+      },
+      "layout": { "x": 123, "y": 49, "width": 47, "height": 15 }
+    }
+  ],
+  "template_variables": [],
+  "layout_type": "free",
+  "is_read_only": false,
+  "notify_list": [],
+  "id": "z3y-gza-bhp"
+}
