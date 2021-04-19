@@ -12,7 +12,7 @@ const Search = () => {
     }, 300);
 
     return () => {
-      clearTimeout(timerId); //if we provide a function as an argument for Useeffect then we are only allowed to return a function.
+      clearTimeout(timerId); //if we provide a function as an argument for useEffect then we are only allowed to return a function.
     };
   }, [term]);
 
